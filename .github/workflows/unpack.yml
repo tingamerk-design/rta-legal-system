@@ -1,0 +1,25 @@
+
+name: Extract RTA ZIP
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract project
+        run: |
+          unzip -o RTA_Legal_System_v1.zip -d extracted
+          cp -a extracted/. .
+          rm -rf extracted
+
+      - name: Save extracted files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Extract RTA project files"
